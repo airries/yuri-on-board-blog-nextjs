@@ -30,23 +30,23 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, chi
       <ScrollTopAndComment />
       <article>
         <div className="xl:divide-y xl:divide-gray-200 xl:dark:divide-gray-700">
-        <header>
+          <header>
             <div className="space-y-1 border-b border-gray-200 pb-10 dark:border-gray-700">
-            <div className="flex flex-row">
-              <dl>
+              <div className="flex flex-row">
+                <dl>
                   <dt className="sr-only">Published on</dt>
                   <dd className="flex flex-row text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
                     <time dateTime={date}>{formatDate(date)}</time>
                   </dd>
-              </dl>
-              {lastmod != null && (
-                <dl>
-                  <dt className="sr-only">LastModified at</dt>
-                  <dd className="flex flex-row text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
-                  （最終更新：<time dateTime={lastmod}>{formatDate(lastmod)}</time>）
-                  </dd>
                 </dl>
-              )}
+                {lastmod != null && (
+                  <dl>
+                    <dt className="sr-only">LastModified at</dt>
+                    <dd className="flex flex-row text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
+                      <time dateTime={lastmod}>（最終更新：{formatDate(lastmod)}）</time>
+                    </dd>
+                  </dl>
+                )}
               </div>
               <div>
                 <PageTitle>{title}</PageTitle>

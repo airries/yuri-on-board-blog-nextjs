@@ -1,7 +1,8 @@
 import siteMetadata from '@/data/siteMetadata'
 import { useEffect, useState } from 'react'
+import { TwitterShareButton, TwitterIcon } from 'react-share'
 
-const ScrollTopAndComment = () => {
+const ScrollTopAndComment = ({ url, title }) => {
   const [show, setShow] = useState(false)
 
   useEffect(() => {
@@ -24,6 +25,9 @@ const ScrollTopAndComment = () => {
     <div
       className={`fixed right-8 bottom-8 hidden flex-col gap-3 ${show ? 'md:flex' : 'md:hidden'}`}
     >
+      <TwitterShareButton url={url} title={title}>
+        <TwitterIcon size={36} round={true} />
+      </TwitterShareButton>
       {siteMetadata.comment.provider && (
         <button
           aria-label="Scroll To Comment"

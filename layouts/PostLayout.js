@@ -27,7 +27,7 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, chi
         authorDetails={authorDetails}
         {...frontMatter}
       />
-      <ScrollTopAndComment />
+      <ScrollTopAndComment url={`${siteMetadata.siteUrl}/blog/${slug}`} title={title} />
       <article>
         <div className="xl:divide-y xl:divide-gray-200 xl:dark:divide-gray-700">
           <header>

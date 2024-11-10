@@ -30,7 +30,7 @@ export default function PostLayout({ content, next, prev, children }: LayoutProp
 
   return (
     <SectionContainer>
-      <ScrollTopAndComment />
+      <ScrollTopAndComment url={`${siteMetadata.siteUrl}/blog/${slug}`} title={title} />
       <article>
         <div>
           <header>

@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 'use client'
 
 import { usePathname } from 'next/navigation'
@@ -139,7 +138,10 @@ export default function ListLayoutWithTags({
                         <dt className="sr-only">Published on</dt>
                         <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
                           <time dateTime={date} suppressHydrationWarning>
-                            {new Date(date).toLocaleDateString(siteMetadata.locale, postDateTemplate)}
+                            {new Date(date).toLocaleDateString(
+                              siteMetadata.locale,
+                              postDateTemplate
+                            )}
                           </time>
                         </dd>
                       </dl>

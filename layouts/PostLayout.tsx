@@ -57,7 +57,14 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                   <dl>
                     <dt className="sr-only">LastModified at</dt>
                     <dd className="flex flex-row text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
-                      <time dateTime={lastmod}>（最終更新：{new Date(lastmod).toLocaleDateString(siteMetadata.locale, postDateTemplate)}）</time>
+                      <time dateTime={lastmod}>
+                        （最終更新：
+                        {new Date(lastmod).toLocaleDateString(
+                          siteMetadata.locale,
+                          postDateTemplate
+                        )}
+                        ）
+                      </time>
                     </dd>
                   </dl>
                 )}

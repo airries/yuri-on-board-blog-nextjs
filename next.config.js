@@ -4,23 +4,29 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
 
-// You might need to insert additional domains in script-src if you are using external services
+const developmentScriptPolicy = process.env.NODE_ENV === 'development' ? "'unsafe-eval'" : ''
+
 const ContentSecurityPolicy = `
   default-src 'self';
-  script-src 'self' 'unsafe-eval' 'unsafe-inline' giscus.app analytics.umami.is;
+  script-src 'self' 'unsafe-inline' ${developmentScriptPolicy} https://giscus.app https://analytics.umami.is;
   style-src 'self' 'unsafe-inline';
-  img-src * blob: data:;
-  media-src *.s3.amazonaws.com;
-  connect-src *;
+  img-src 'self' blob: data: https://avatars.githubusercontent.com;
+  media-src 'self';
+  connect-src 'self' https://giscus.app https://analytics.umami.is;
   font-src 'self';
-  frame-src giscus.app
+  frame-src https://giscus.app;
+  worker-src 'self' blob:;
+  object-src 'none';
+  base-uri 'self';
+  form-action 'self';
+  frame-ancestors 'none';
 `
 
 const securityHeaders = [
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
   {
     key: 'Content-Security-Policy',
-    value: ContentSecurityPolicy.replace(/\n/g, ''),
+    value: ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim(),
   },
   // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy
   {
@@ -69,12 +75,6 @@ module.exports = () => {
     reactStrictMode: true,
     pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
     images: {
-      remotePatterns: [
-        {
-          protocol: 'https',
-          hostname: 'picsum.photos',
-        },
-      ],
       unoptimized,
     },
     async headers() {

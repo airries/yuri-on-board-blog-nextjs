@@ -11,7 +11,10 @@
     "build": "next build --webpack && node ./scripts/postbuild.mjs",
     "serve": "next start",
     "analyze": "cross-env ANALYZE=true next build --webpack",
-    "lint": "eslint --fix app components layouts scripts contentlayer.config.ts next.config.js",
+    "lint": "eslint app components layouts scripts data contentlayer.config.ts next.config.js",
+    "lint:fix": "eslint --fix app components layouts scripts data contentlayer.config.ts next.config.js",
+    "typecheck": "tsc --noEmit",
+    "check": "yarn lint && yarn typecheck && yarn build",
     "prepare": "husky"
   },
   "dependencies": {

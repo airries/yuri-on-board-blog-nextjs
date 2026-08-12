@@ -8,12 +8,13 @@
   "scripts": {
     "start": "next start",
     "dev": "next dev --webpack",
-    "build": "next build --webpack && node ./scripts/postbuild.mjs",
+    "generate:content": "contentlayer2 build",
+    "build": "cross-env NODE_ENV=production contentlayer2 build && next build --webpack && node ./scripts/postbuild.mjs",
     "serve": "next start",
     "analyze": "cross-env ANALYZE=true next build --webpack",
     "lint": "eslint app components layouts scripts data contentlayer.config.ts next.config.js",
     "lint:fix": "eslint --fix app components layouts scripts data contentlayer.config.ts next.config.js",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "contentlayer2 build && tsc --noEmit",
     "check": "yarn lint && yarn typecheck && yarn build",
     "prepare": "husky"
   },

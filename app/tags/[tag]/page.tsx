@@ -29,7 +29,9 @@ export const generateStaticParams = async () => {
   const tagCounts = tagData as Record<string, number>
   const tagKeys = Object.keys(tagCounts)
   const paths = tagKeys.map((tag) => ({
-    tag: encodeURI(tag),
+    // Next.js encodes dynamic path segments when it creates the route.
+    // Returning an encoded value here would encode non-ASCII tags twice.
+    tag,
   }))
   return paths
 }

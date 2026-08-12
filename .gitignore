@@ -33,6 +33,7 @@ public/sitemap.xml
 
 # debug
 *.log
+*.tsbuildinfo
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

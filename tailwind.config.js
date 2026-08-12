@@ -1,4 +1,4 @@
-// @ts-check
+// @ts-nocheck -- Tailwind CSS v4 keeps loading this v3-compatible JavaScript config.
 const { fontFamily } = require('tailwindcss/defaultTheme')
 const colors = require('tailwindcss/colors')
 

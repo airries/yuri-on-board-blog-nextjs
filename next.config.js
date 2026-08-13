@@ -5,11 +5,11 @@ const developmentScriptPolicy = process.env.NODE_ENV === 'development' ? "'unsaf
 
 const ContentSecurityPolicy = `
   default-src 'self';
-  script-src 'self' 'unsafe-inline' ${developmentScriptPolicy} https://giscus.app https://analytics.umami.is;
+  script-src 'self' 'unsafe-inline' ${developmentScriptPolicy} https://giscus.app https://analytics.umami.is https://*.googletagmanager.com;
   style-src 'self' 'unsafe-inline';
-  img-src 'self' blob: data: https://avatars.githubusercontent.com;
+  img-src 'self' blob: data: https://avatars.githubusercontent.com https://*.google-analytics.com https://*.googletagmanager.com;
   media-src 'self';
-  connect-src 'self' https://giscus.app https://analytics.umami.is;
+  connect-src 'self' https://giscus.app https://analytics.umami.is https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com;
   font-src 'self';
   frame-src https://giscus.app;
   worker-src 'self' blob:;

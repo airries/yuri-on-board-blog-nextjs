@@ -170,6 +170,14 @@ export default makeSource({
   documentTypes: [Blog, Authors],
   mdx: {
     cwd: process.cwd(),
+    mdxOptions: (options) => ({
+      ...options,
+      remarkRehypeOptions: {
+        ...options.remarkRehypeOptions,
+        footnoteLabel: '脚注',
+        footnoteBackLabel: (referenceIndex) => `脚注${referenceIndex + 1}の参照箇所に戻る`,
+      },
+    }),
     remarkPlugins: [
       remarkExtractFrontmatter,
       remarkGfm,

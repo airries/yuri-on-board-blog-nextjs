@@ -96,6 +96,21 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
     return coreContent(authorResults as Authors)
   })
   const mainContent = coreContent(post)
+  const currentTags = new Set(mainContent.tags ?? [])
+  const relatedPosts = sortedCoreContents
+    .filter((candidate) => candidate.slug !== slug)
+    .map((candidate) => ({
+      post: candidate,
+      score: (candidate.tags ?? []).filter((tag) => currentTags.has(tag)).length,
+    }))
+    // Prefer shared tags, then fall back to recent posts so the section remains useful
+    // even when a newly published article introduces a new tag set.
+    .sort(
+      (a, b) =>
+        b.score - a.score || new Date(b.post.date).getTime() - new Date(a.post.date).getTime()
+    )
+    .slice(0, 3)
+    .map(({ post: relatedPost }) => relatedPost)
   const jsonLd = post.structuredData
   jsonLd['author'] = authorDetails.map((author) => {
     return {
@@ -112,7 +127,13 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <Layout content={mainContent} authorDetails={authorDetails} next={next} prev={prev}>
+      <Layout
+        content={mainContent}
+        authorDetails={authorDetails}
+        next={next}
+        prev={prev}
+        relatedPosts={relatedPosts}
+      >
         <MDXLayoutRenderer code={post.body.code} components={components} toc={post.toc} />
       </Layout>
     </>

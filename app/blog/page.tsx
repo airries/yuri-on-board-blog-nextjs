@@ -4,7 +4,7 @@ import { allBlogs } from 'contentlayer/generated'
 import { genPageMetadata } from 'app/seo'
 import { POSTS_PER_PAGE } from '@/data/blogConfig'
 
-export const metadata = genPageMetadata({ title: 'Blog' })
+export const metadata = genPageMetadata({ title: 'Articles' })
 
 export default function BlogPage() {
   const posts = allCoreContent(sortPosts(allBlogs))

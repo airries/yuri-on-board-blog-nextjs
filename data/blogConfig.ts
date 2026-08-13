@@ -1,8 +1,6 @@
 export const POSTS_PER_PAGE = 5
 
-//: 記事日付の表示書式。一覧・記事・レイアウトで同じ見え方にするため定義はここだけ
-export const POST_DATE_FORMAT: Intl.DateTimeFormatOptions = {
-  year: 'numeric',
-  month: '2-digit',
-  day: '2-digit',
+// Contentlayer が検証した記事の日付を、日時へ変換せず YYYY.MM.DD に整形する。
+export function formatPostDate(value: string) {
+  return value.slice(0, 10).replaceAll('-', '.')
 }

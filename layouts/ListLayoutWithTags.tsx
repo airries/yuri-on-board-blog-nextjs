@@ -1,12 +1,10 @@
-import { POST_DATE_FORMAT } from '@/data/blogConfig'
+import { formatPostDate } from '@/data/blogConfig'
 import { slug } from 'github-slugger'
 import { CoreContent } from 'pliny/utils/contentlayer'
 import type { Blog } from 'contentlayer/generated'
 import Link from '@/components/Link'
 import Tag from '@/components/Tag'
-import siteMetadata from '@/data/siteMetadata'
 import tagData from 'app/tag-data.json'
-
 
 interface PaginationProps {
   totalPages: number
@@ -29,7 +27,7 @@ function Pagination({ totalPages, currentPage, basePath }: PaginationProps) {
   const nextPage = currentPage + 1 <= totalPages
 
   return (
-    <div className="space-y-2 pb-8 pt-6 md:space-y-5">
+    <div className="space-y-2 pt-6 pb-8 md:space-y-5">
       <nav className="flex justify-between">
         {!prevPage && (
           <button className="cursor-auto disabled:opacity-50" disabled={!prevPage}>
@@ -79,16 +77,46 @@ export default function ListLayoutWithTags({
   return (
     <>
       <div>
-        <div className="pb-6 pt-6">
-          <p className="text-primary-600 dark:text-primary-400 mb-2 text-xs font-semibold tracking-[0.18em]">
+        <div className="pt-6 pb-6">
+          <p className="mb-2 text-xs font-semibold tracking-[0.18em] text-primary-600 dark:text-primary-400">
             ARTICLES
           </p>
-          <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:hidden sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
+          <h1 className="text-3xl leading-9 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10 md:text-5xl md:leading-14 dark:text-gray-100">
             {title}
           </h1>
+          <details className="mt-5 border-y border-paper-border py-3 sm:hidden dark:border-gray-800">
+            <summary className="cursor-pointer text-sm font-medium text-primary-600 dark:text-primary-400">
+              タグで絞り込む
+            </summary>
+            <nav className="flex flex-wrap gap-x-4 gap-y-3 pt-4" aria-label="タグ一覧">
+              <Link
+                href="/blog"
+                className={
+                  !activeTag
+                    ? 'font-medium text-primary-500'
+                    : 'text-sm text-gray-600 dark:text-gray-300'
+                }
+              >
+                すべての記事
+              </Link>
+              {sortedTags.map((tag) => (
+                <Link
+                  key={tag}
+                  href={`/tags/${slug(tag)}`}
+                  className={
+                    activeTag === slug(tag)
+                      ? 'text-sm font-medium text-primary-500'
+                      : 'text-sm text-gray-600 hover:text-primary-500 dark:text-gray-300'
+                  }
+                >
+                  {tag} ({tagCounts[tag]})
+                </Link>
+              ))}
+            </nav>
+          </details>
         </div>
         <div className="flex sm:space-x-24">
-          <div className="bg-paper-panel border-paper-border hidden h-full max-h-screen min-w-[280px] max-w-[280px] flex-wrap overflow-auto rounded border pt-5 dark:border-gray-800 dark:bg-gray-900/70 sm:flex">
+          <div className="hidden h-full max-h-screen max-w-[280px] min-w-[280px] flex-wrap overflow-auto rounded border border-paper-border bg-paper-panel pt-5 sm:flex dark:border-gray-800 dark:bg-gray-900/70">
             <div className="px-6 py-4">
               {!activeTag ? (
                 <h3 className="font-bold text-primary-500">すべての記事</h3>
@@ -124,7 +152,7 @@ export default function ListLayoutWithTags({
             </div>
           </div>
           <div>
-            <ul className="divide-paper-border divide-y dark:divide-gray-800">
+            <ul className="divide-y divide-paper-border dark:divide-gray-800">
               {displayPosts.map((post) => {
                 const { path, date, title, summary, tags } = post
                 return (
@@ -132,18 +160,15 @@ export default function ListLayoutWithTags({
                     <article className="flex flex-col space-y-2 xl:space-y-0">
                       <dl>
                         <dt className="sr-only">Published on</dt>
-                        <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
+                        <dd className="text-base leading-6 font-medium text-gray-500 dark:text-gray-400">
                           <time dateTime={date} suppressHydrationWarning>
-                            {new Date(date).toLocaleDateString(
-                              siteMetadata.locale,
-                              POST_DATE_FORMAT
-                            )}
+                            {formatPostDate(date)}
                           </time>
                         </dd>
                       </dl>
                       <div className="space-y-3">
                         <div>
-                          <h2 className="text-2xl font-bold leading-8 tracking-tight">
+                          <h2 className="text-2xl leading-8 font-bold tracking-tight">
                             <Link href={`/${path}`} className="text-gray-900 dark:text-gray-100">
                               {title}
                             </Link>

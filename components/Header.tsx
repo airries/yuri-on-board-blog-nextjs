@@ -5,6 +5,7 @@ import Link from './Link'
 import MobileNav from './MobileNav'
 import ThemeSwitch from './ThemeSwitch'
 import SearchButton from './SearchButton'
+import RSSButton from './RSSButton'
 
 const Header = () => {
   let headerClass = 'flex items-center w-full bg-paper dark:bg-gray-950 justify-between py-10'
@@ -38,6 +39,7 @@ const Header = () => {
             ))}
         </div>
         <SearchButton />
+        <RSSButton />
         <ThemeSwitch />
         <MobileNav />
       </div>

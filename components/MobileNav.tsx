@@ -16,7 +16,7 @@ const MobileNav = () => {
       <button
         aria-label="メニューを開く"
         onClick={() => setNavShow(true)}
-        className="hover:text-primary-500 dark:hover:text-primary-400 sm:hidden"
+        className="hover:text-primary-500 sm:hidden dark:hover:text-primary-400"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -55,10 +55,10 @@ const MobileNav = () => {
             leaveFrom="translate-x-0"
             leaveTo="translate-x-full"
           >
-            <DialogPanel className="bg-paper fixed inset-y-0 right-0 z-70 w-full max-w-xs p-8 dark:bg-gray-950">
+            <DialogPanel className="fixed inset-y-0 right-0 z-70 w-full max-w-xs bg-paper p-8 dark:bg-gray-950">
               <div className="flex justify-end">
                 <button
-                  className="hover:text-primary-500 dark:hover:text-primary-400 -mt-2 -mr-2 h-10 w-10 p-2 text-gray-900 dark:text-gray-100"
+                  className="-mt-2 -mr-2 h-10 w-10 p-2 text-gray-900 hover:text-primary-500 dark:text-gray-100 dark:hover:text-primary-400"
                   aria-label="メニューを閉じる"
                   onClick={closeNav}
                 >
@@ -72,16 +72,18 @@ const MobileNav = () => {
                 </button>
               </div>
               <nav className="mt-6 flex flex-col gap-1">
-                {headerNavLinks.map((link) => (
-                  <Link
-                    key={link.title}
-                    href={link.href}
-                    className="hover:text-primary-500 dark:hover:text-primary-400 rounded-lg px-3 py-3 text-xl font-medium tracking-wide text-gray-900 transition-colors dark:text-gray-100"
-                    onClick={closeNav}
-                  >
-                    {link.title}
-                  </Link>
-                ))}
+                {headerNavLinks
+                  .filter((link) => link.href !== '/')
+                  .map((link) => (
+                    <Link
+                      key={link.title}
+                      href={link.href}
+                      className="rounded-lg px-3 py-3 text-xl font-medium tracking-wide text-gray-900 transition-colors hover:text-primary-500 dark:text-gray-100 dark:hover:text-primary-400"
+                      onClick={closeNav}
+                    >
+                      {link.title}
+                    </Link>
+                  ))}
               </nav>
             </DialogPanel>
           </TransitionChild>

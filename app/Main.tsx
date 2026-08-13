@@ -1,4 +1,4 @@
-import { POST_DATE_FORMAT } from '@/data/blogConfig'
+import { formatPostDate } from '@/data/blogConfig'
 import type { CoreContent } from 'pliny/utils/contentlayer'
 import type { Blog } from 'contentlayer/generated'
 import Link from '@/components/Link'
@@ -7,36 +7,33 @@ import siteMetadata from '@/data/siteMetadata'
 
 const MAX_DISPLAY = 5
 
-
 export default function Home({ posts }: { posts: CoreContent<Blog>[] }) {
   return (
     <>
-      <div className="divide-paper-border divide-y dark:divide-gray-800">
+      <div className="divide-y divide-paper-border dark:divide-gray-800">
         <div className="space-y-2 pt-6 pb-8 md:space-y-5">
-          <p className="text-primary-600 dark:text-primary-400 text-xs font-semibold tracking-[0.18em]">
+          <p className="text-xs font-semibold tracking-[0.18em] text-primary-600 dark:text-primary-400">
             ARTICLES
           </p>
-          <h1 className="text-3xl font-bold text-gray-900 sm:text-4xl md:text-5xl dark:text-gray-100 leading-[1.35] tracking-normal">
+          <h1 className="text-3xl leading-[1.35] font-bold tracking-normal text-gray-900 sm:text-4xl md:text-5xl dark:text-gray-100">
             最新の記事
           </h1>
           <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
             {siteMetadata.description}
           </p>
         </div>
-        <ul className="divide-paper-border divide-y dark:divide-gray-800">
+        <ul className="divide-y divide-paper-border dark:divide-gray-800">
           {!posts.length && 'No posts found.'}
           {posts.slice(0, MAX_DISPLAY).map((post) => {
             const { slug, date, title, summary, tags } = post
             return (
               <li key={slug} className="py-12">
                 <article>
-                  <div className="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
+                  <div className="space-y-3 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
                     <dl>
                       <dt className="sr-only">Published on</dt>
                       <dd className="text-base leading-6 font-medium text-gray-500 dark:text-gray-400">
-                        <time dateTime={date}>
-                          {new Date(date).toLocaleDateString(siteMetadata.locale, POST_DATE_FORMAT)}
-                        </time>
+                        <time dateTime={date}>{formatPostDate(date)}</time>
                       </dd>
                     </dl>
                     <div className="space-y-5 xl:col-span-3">

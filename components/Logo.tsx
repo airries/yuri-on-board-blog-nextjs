@@ -5,7 +5,9 @@ import type { SVGProps } from 'react'
 // primary の CSS 変数を使うのでダーク/ライトを自動追従する。
 export default function Logo(props: SVGProps<SVGSVGElement>) {
   return (
-    <svg viewBox="0 0 168 32" height="28" role="img" aria-label="Yuri on Board" {...props}>
+    // viewBox の幅は "on board" の実際の描画幅 (フォント次第で変わる) に
+    // 余裕を持たせておく。狭いと SVG の既定 overflow:hidden で末尾が切れる。
+    <svg viewBox="0 0 196 32" height="28" role="img" aria-label="Yuri on Board" {...props}>
       <text
         x="0"
         y="23"

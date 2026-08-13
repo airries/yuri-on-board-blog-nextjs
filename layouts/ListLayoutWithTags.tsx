@@ -4,7 +4,7 @@ import { CoreContent } from 'pliny/utils/contentlayer'
 import type { Blog } from 'contentlayer/generated'
 import Link from '@/components/Link'
 import Tag from '@/components/Tag'
-import AnimatedDisclosure from '@/components/AnimatedDisclosure'
+import MobileTagFilter from '@/components/MobileTagFilter'
 import tagData from 'app/tag-data.json'
 
 interface PaginationProps {
@@ -72,6 +72,11 @@ export default function ListLayoutWithTags({
   const tagCounts = tagData as Record<string, number>
   const tagKeys = Object.keys(tagCounts)
   const sortedTags = tagKeys.sort((a, b) => tagCounts[b] - tagCounts[a])
+  const mobileTags = sortedTags.map((tag) => ({
+    count: tagCounts[tag],
+    name: tag,
+    slug: slug(tag),
+  }))
 
   const displayPosts = initialDisplayPosts.length > 0 ? initialDisplayPosts : posts
 
@@ -85,43 +90,15 @@ export default function ListLayoutWithTags({
           <h1 className="text-3xl leading-9 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10 md:text-5xl md:leading-14 dark:text-gray-100">
             {title}
           </h1>
-          <AnimatedDisclosure
-            title="タグで絞り込む"
-            defaultOpen={Boolean(activeTag)}
-            className="mt-5 sm:hidden"
-          >
-            <nav className="flex flex-wrap gap-x-4 gap-y-3" aria-label="タグ一覧">
-              <Link
-                href="/blog"
-                className={
-                  !activeTag
-                    ? 'font-medium text-primary-500'
-                    : 'text-sm text-gray-600 dark:text-gray-300'
-                }
-              >
-                すべての記事
-              </Link>
-              {sortedTags.map((tag) => (
-                <Link
-                  key={tag}
-                  href={`/tags/${slug(tag)}`}
-                  className={
-                    activeTag === slug(tag)
-                      ? 'text-sm font-medium text-primary-500'
-                      : 'text-sm text-gray-600 hover:text-primary-500 dark:text-gray-300'
-                  }
-                >
-                  {tag} ({tagCounts[tag]})
-                </Link>
-              ))}
-            </nav>
-          </AnimatedDisclosure>
+          <MobileTagFilter activeTag={activeTag} tags={mobileTags} />
         </div>
         <div className="flex sm:space-x-24">
           <div className="hidden h-full max-h-screen max-w-[280px] min-w-[280px] flex-wrap overflow-auto rounded border border-paper-border bg-paper-panel pt-5 sm:flex dark:border-gray-800 dark:bg-gray-900/70">
             <div className="px-6 py-4">
               {!activeTag ? (
-                <h3 className="font-bold text-primary-500">すべての記事</h3>
+                <h3 className="inline px-3 py-2 text-sm font-bold text-primary-500">
+                  すべての記事
+                </h3>
               ) : (
                 <Link
                   href={`/blog`}

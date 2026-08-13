@@ -44,9 +44,7 @@ export default function TableOfContents({ toc = [], variant }: TableOfContentsPr
   return (
     <aside className="sticky top-6 mt-10 hidden self-start rounded-xl border border-paper-border bg-paper-panel/55 p-4 text-sm shadow-sm shadow-gray-200/40 xl:block dark:border-gray-800 dark:bg-gray-900/60 dark:shadow-none">
       <div className="mb-3 flex items-center gap-3 px-2">
-        <p className="text-xs font-semibold tracking-[0.16em] text-gray-500 uppercase dark:text-gray-400">
-          Contents
-        </p>
+        <p className="text-sm font-semibold text-gray-600 dark:text-gray-300">目次</p>
         <span className="h-px flex-1 bg-paper-border dark:bg-gray-700" aria-hidden="true" />
       </div>
       <TocLinks toc={toc} />

@@ -93,43 +93,47 @@ export default function ListLayoutWithTags({
           <MobileTagFilter activeTag={activeTag} tags={mobileTags} />
         </div>
         <div className="flex sm:space-x-24">
-          <div className="hidden h-full max-h-screen max-w-[280px] min-w-[280px] flex-wrap overflow-auto rounded border border-paper-border bg-paper-panel pt-5 sm:flex dark:border-gray-800 dark:bg-gray-900/70">
-            <div className="px-6 py-4">
-              {!activeTag ? (
-                <h3 className="inline px-3 py-2 text-sm font-bold text-primary-500">
-                  すべての記事
-                </h3>
-              ) : (
-                <Link
-                  href={`/blog`}
-                  className="font-bold text-gray-700 hover:text-primary-500 dark:text-gray-300 dark:hover:text-primary-500"
-                >
-                  すべての記事
-                </Link>
-              )}
-              <ul>
+          <aside className="hidden h-full max-h-screen max-w-[280px] min-w-[280px] overflow-auto rounded-xl border border-paper-border bg-paper-panel/55 p-4 text-sm shadow-sm shadow-gray-200/40 sm:block dark:border-gray-800 dark:bg-gray-900/60 dark:shadow-none">
+            <div className="mb-3 flex items-center gap-3 px-2">
+              <p className="text-sm font-semibold text-gray-600 dark:text-gray-300">タグ</p>
+              <span className="h-px flex-1 bg-paper-border dark:bg-gray-700" aria-hidden="true" />
+            </div>
+            <nav aria-label="タグ一覧">
+              <Link
+                href="/blog"
+                aria-current={!activeTag ? 'page' : undefined}
+                className={`block rounded-md px-2 py-2 text-base transition-colors hover:bg-white/70 hover:text-primary-500 dark:hover:bg-gray-800/80 dark:hover:text-primary-400 ${
+                  !activeTag
+                    ? 'font-semibold text-primary-500'
+                    : 'font-medium text-gray-600 dark:text-gray-300'
+                }`}
+              >
+                すべての記事
+              </Link>
+              <ul className="mt-1 space-y-1">
                 {sortedTags.map((t) => {
+                  const tagSlug = slug(t)
+                  const isActive = activeTag === tagSlug
                   return (
-                    <li key={t} className="my-3">
-                      {activeTag === slug(t) ? (
-                        <h3 className="inline px-3 py-2 text-sm font-bold text-primary-500">
-                          {`${t} (${tagCounts[t]})`}
-                        </h3>
-                      ) : (
-                        <Link
-                          href={`/tags/${slug(t)}`}
-                          className="px-3 py-2 text-sm font-medium text-gray-500 hover:text-primary-500 dark:text-gray-300 dark:hover:text-primary-500"
-                          aria-label={`View posts tagged ${t}`}
-                        >
-                          {`${t} (${tagCounts[t]})`}
-                        </Link>
-                      )}
+                    <li key={t}>
+                      <Link
+                        href={`/tags/${tagSlug}`}
+                        aria-current={isActive ? 'page' : undefined}
+                        className={`block rounded-md px-2 py-2 text-base transition-colors hover:bg-white/70 hover:text-primary-500 dark:hover:bg-gray-800/80 dark:hover:text-primary-400 ${
+                          isActive
+                            ? 'font-semibold text-primary-500'
+                            : 'font-medium text-gray-600 dark:text-gray-300'
+                        }`}
+                        aria-label={`View posts tagged ${t}`}
+                      >
+                        {`${t} (${tagCounts[t]})`}
+                      </Link>
                     </li>
                   )
                 })}
               </ul>
-            </div>
-          </div>
+            </nav>
+          </aside>
           <div>
             <ul className="divide-y divide-paper-border dark:divide-gray-800">
               {displayPosts.map((post) => {

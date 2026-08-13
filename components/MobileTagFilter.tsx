@@ -24,8 +24,8 @@ export default function MobileTagFilter({ activeTag, tags }: MobileTagFilterProp
               href={`/blog${hash}`}
               className={
                 !activeTag
-                  ? 'text-sm font-medium text-primary-500'
-                  : 'text-sm text-gray-600 dark:text-gray-300'
+                  ? 'text-base font-medium text-primary-500'
+                  : 'text-base text-gray-600 dark:text-gray-300'
               }
             >
               すべての記事
@@ -36,8 +36,8 @@ export default function MobileTagFilter({ activeTag, tags }: MobileTagFilterProp
                 href={`/tags/${tag.slug}${hash}`}
                 className={
                   activeTag === tag.slug
-                    ? 'text-sm font-medium text-primary-500'
-                    : 'text-sm text-gray-600 hover:text-primary-500 dark:text-gray-300'
+                    ? 'text-base font-medium text-primary-500'
+                    : 'text-base text-gray-600 hover:text-primary-500 dark:text-gray-300'
                 }
               >
                 {tag.name} ({tag.count})

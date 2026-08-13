@@ -146,6 +146,9 @@ export default function KBarSearchProvider({
             perform: () => router.push(`/${post.path}`),
           }))
         )
+      } catch (error) {
+        if (controller.signal.aborted) return
+        console.error('Failed to load the search index:', error)
       } finally {
         if (!controller.signal.aborted) setLoading(false)
       }

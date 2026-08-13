@@ -1,3 +1,5 @@
+import AnimatedDisclosure from './AnimatedDisclosure'
+
 type TocItem = {
   value: string
   url: string
@@ -17,7 +19,7 @@ function TocLinks({ toc }: { toc: TocItem[] }) {
           <li key={item.url} style={{ paddingLeft: `${Math.max(0, item.depth - 2) * 0.75}rem` }}>
             <a
               href={item.url}
-              className="block leading-relaxed text-gray-600 transition-colors hover:text-primary-500 dark:text-gray-400 dark:hover:text-primary-400"
+              className="block rounded-md px-2 py-1.5 leading-relaxed text-gray-600 transition-colors hover:bg-white/70 hover:text-primary-500 dark:text-gray-400 dark:hover:bg-gray-800/80 dark:hover:text-primary-400"
             >
               {item.value}
             </a>
@@ -33,22 +35,20 @@ export default function TableOfContents({ toc = [], variant }: TableOfContentsPr
 
   if (variant === 'mobile') {
     return (
-      <details className="mt-6 border-y border-paper-border py-3 text-sm xl:hidden dark:border-gray-800">
-        <summary className="cursor-pointer font-medium text-primary-600 dark:text-primary-400">
-          目次
-        </summary>
-        <div className="pt-3">
-          <TocLinks toc={toc} />
-        </div>
-      </details>
+      <AnimatedDisclosure title="目次" className="mt-6 text-sm xl:hidden">
+        <TocLinks toc={toc} />
+      </AnimatedDisclosure>
     )
   }
 
   return (
-    <aside className="sticky top-6 hidden self-start border-l border-gray-200 pl-5 text-sm xl:block dark:border-gray-800">
-      <p className="mb-3 text-xs font-medium tracking-[0.16em] text-gray-400 uppercase dark:text-gray-500">
-        Contents
-      </p>
+    <aside className="sticky top-6 mt-10 hidden self-start rounded-xl border border-paper-border bg-paper-panel/55 p-4 text-sm shadow-sm shadow-gray-200/40 xl:block dark:border-gray-800 dark:bg-gray-900/60 dark:shadow-none">
+      <div className="mb-3 flex items-center gap-3 px-2">
+        <p className="text-xs font-semibold tracking-[0.16em] text-gray-500 uppercase dark:text-gray-400">
+          Contents
+        </p>
+        <span className="h-px flex-1 bg-paper-border dark:bg-gray-700" aria-hidden="true" />
+      </div>
       <TocLinks toc={toc} />
     </aside>
   )

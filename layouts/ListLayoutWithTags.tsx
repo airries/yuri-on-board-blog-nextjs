@@ -4,6 +4,7 @@ import { CoreContent } from 'pliny/utils/contentlayer'
 import type { Blog } from 'contentlayer/generated'
 import Link from '@/components/Link'
 import Tag from '@/components/Tag'
+import AnimatedDisclosure from '@/components/AnimatedDisclosure'
 import tagData from 'app/tag-data.json'
 
 interface PaginationProps {
@@ -84,11 +85,12 @@ export default function ListLayoutWithTags({
           <h1 className="text-3xl leading-9 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10 md:text-5xl md:leading-14 dark:text-gray-100">
             {title}
           </h1>
-          <details className="mt-5 border-y border-paper-border py-3 sm:hidden dark:border-gray-800">
-            <summary className="cursor-pointer text-sm font-medium text-primary-600 dark:text-primary-400">
-              タグで絞り込む
-            </summary>
-            <nav className="flex flex-wrap gap-x-4 gap-y-3 pt-4" aria-label="タグ一覧">
+          <AnimatedDisclosure
+            title="タグで絞り込む"
+            defaultOpen={Boolean(activeTag)}
+            className="mt-5 sm:hidden"
+          >
+            <nav className="flex flex-wrap gap-x-4 gap-y-3" aria-label="タグ一覧">
               <Link
                 href="/blog"
                 className={
@@ -113,7 +115,7 @@ export default function ListLayoutWithTags({
                 </Link>
               ))}
             </nav>
-          </details>
+          </AnimatedDisclosure>
         </div>
         <div className="flex sm:space-x-24">
           <div className="hidden h-full max-h-screen max-w-[280px] min-w-[280px] flex-wrap overflow-auto rounded border border-paper-border bg-paper-panel pt-5 sm:flex dark:border-gray-800 dark:bg-gray-900/70">

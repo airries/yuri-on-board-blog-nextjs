@@ -1,3 +1,4 @@
+import { POST_DATE_FORMAT } from '@/data/blogConfig'
 import { ReactNode } from 'react'
 import { CoreContent } from 'pliny/utils/contentlayer'
 import type { Blog, Authors } from 'contentlayer/generated'
@@ -10,18 +11,10 @@ import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 
-const editUrl = (path) => `${siteMetadata.siteRepo}/blob/main/data/${path}`
-const discussUrl = (path) =>
+const editUrl = (path: string) => `${siteMetadata.siteRepo}/blob/main/data/${path}`
+const discussUrl = (path: string) =>
   `https://mobile.twitter.com/search?q=${encodeURIComponent(`${siteMetadata.siteUrl}/${path}`)}`
 
-const postDateTemplate: Intl.DateTimeFormatOptions = {
-  // weekday: 'long',
-  year: 'numeric',
-  // month: 'long',
-  month: '2-digit',
-  // day: 'numeric',
-  day: '2-digit',
-}
 
 interface LayoutProps {
   content: CoreContent<Blog>
@@ -48,7 +41,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                     <dt className="sr-only">Published on</dt>
                     <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
                       <time dateTime={date}>
-                        {new Date(date).toLocaleDateString(siteMetadata.locale, postDateTemplate)}
+                        {new Date(date).toLocaleDateString(siteMetadata.locale, POST_DATE_FORMAT)}
                       </time>
                     </dd>
                   </div>
@@ -61,7 +54,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                         （最終更新：
                         {new Date(lastmod).toLocaleDateString(
                           siteMetadata.locale,
-                          postDateTemplate
+                          POST_DATE_FORMAT
                         )}
                         ）
                       </time>
@@ -113,7 +106,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
               </dd>
             </dl>
             <div className="divide-y divide-gray-200 dark:divide-gray-700 xl:col-span-3 xl:row-span-2 xl:pb-0">
-              <div className="prose max-w-none pb-8 pt-10 dark:prose-invert">{children}</div>
+              <div className="prose max-w-[46rem] pb-8 pt-10 dark:prose-invert">{children}</div>
               <div className="pb-6 pt-6 text-sm text-gray-700 dark:text-gray-300">
                 <Link href={discussUrl(path)} rel="nofollow">
                   Discuss on Twitter

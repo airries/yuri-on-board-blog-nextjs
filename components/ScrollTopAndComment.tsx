@@ -4,7 +4,7 @@ import siteMetadata from '@/data/siteMetadata'
 import { useEffect, useState } from 'react'
 import { TwitterShareButton, XIcon } from 'react-share'
 
-const ScrollTopAndComment = ({ url, title }) => {
+const ScrollTopAndComment = ({ url, title }: { url: string; title: string }) => {
   const [show, setShow] = useState(false)
 
   useEffect(() => {

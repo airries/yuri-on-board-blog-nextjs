@@ -25,6 +25,18 @@ import rehypePresetMinify from 'rehype-preset-minify'
 import siteMetadata from './data/siteMetadata'
 import { allCoreContent, sortPosts } from 'pliny/utils/contentlayer.js'
 
+// 生成後の型 (contentlayer/generated) はここからは参照できないので、
+// onSuccess が渡してくる形だけを最小限で表す
+type BlogDoc = {
+  _id: string
+  _raw: Record<string, unknown>
+  date: string
+  body: { raw: string; code: string }
+  tags?: string[]
+  draft?: boolean
+  [key: string]: unknown
+}
+
 const root = process.cwd()
 const isProduction = process.env.NODE_ENV === 'production'
 
@@ -61,11 +73,11 @@ const computedFields: ComputedFields = {
 /**
  * Count the occurrences of all tags across blog posts and write to json file
  */
-function createTagCount(allBlogs) {
+function createTagCount(allBlogs: BlogDoc[]) {
   const tagCount: Record<string, number> = {}
   allBlogs.forEach((file) => {
     if (file.tags && (!isProduction || file.draft !== true)) {
-      file.tags.forEach((tag) => {
+      file.tags.forEach((tag: string) => {
         const formattedTag = slug(tag)
         if (formattedTag in tagCount) {
           tagCount[formattedTag] += 1
@@ -78,14 +90,23 @@ function createTagCount(allBlogs) {
   writeFileSync('./app/tag-data.json', `${JSON.stringify(tagCount, null, 2)}\n`)
 }
 
-function createSearchIndex(allBlogs) {
+function createSearchIndex(allBlogs: BlogDoc[]) {
   if (
     siteMetadata?.search?.provider === 'kbar' &&
     siteMetadata.search.kbarConfig.searchDocumentsPath
   ) {
+    // kbar が引くのは題名・要約・タグ・パスだけ。toc や structuredData まで
+    // 載せると、記事が増えるほどクライアントが無駄に大きい JSON を取りに行く
+    const documents = allCoreContent(sortPosts(allBlogs)).map((post) => ({
+      title: post.title,
+      summary: post.summary,
+      date: post.date,
+      tags: post.tags,
+      path: post.path,
+    }))
     writeFileSync(
       `public/${path.basename(siteMetadata.search.kbarConfig.searchDocumentsPath)}`,
-      JSON.stringify(allCoreContent(sortPosts(allBlogs)))
+      JSON.stringify(documents)
     )
     console.log('Local search index generated...')
   }

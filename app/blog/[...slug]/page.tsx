@@ -15,7 +15,7 @@ import siteMetadata from '@/data/siteMetadata'
 import { notFound } from 'next/navigation'
 
 const defaultLayout = 'PostLayout'
-const layouts = {
+const layouts: Record<string, typeof PostLayout> = {
   PostSimple,
   PostLayout,
   PostBanner,

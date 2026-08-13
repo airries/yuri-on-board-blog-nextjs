@@ -1,24 +1,19 @@
+import { POST_DATE_FORMAT } from '@/data/blogConfig'
+import type { CoreContent } from 'pliny/utils/contentlayer'
+import type { Blog } from 'contentlayer/generated'
 import Link from '@/components/Link'
 import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
 
 const MAX_DISPLAY = 5
 
-const postDateTemplate: Intl.DateTimeFormatOptions = {
-  // weekday: 'long',
-  year: 'numeric',
-  // month: 'long',
-  month: '2-digit',
-  // day: 'numeric',
-  day: '2-digit',
-}
 
-export default function Home({ posts }) {
+export default function Home({ posts }: { posts: CoreContent<Blog>[] }) {
   return (
     <>
       <div className="divide-y divide-gray-200 dark:divide-gray-700">
         <div className="space-y-2 pt-6 pb-8 md:space-y-5">
-          <h1 className="text-3xl leading-9 font-extrabold tracking-tight text-gray-900 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14 dark:text-gray-100">
+          <h1 className="text-3xl font-bold text-gray-900 sm:text-4xl md:text-5xl dark:text-gray-100 leading-[1.35] tracking-normal">
             最新の記事
           </h1>
           <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
@@ -37,7 +32,7 @@ export default function Home({ posts }) {
                       <dt className="sr-only">Published on</dt>
                       <dd className="text-base leading-6 font-medium text-gray-500 dark:text-gray-400">
                         <time dateTime={date}>
-                          {new Date(date).toLocaleDateString(siteMetadata.locale, postDateTemplate)}
+                          {new Date(date).toLocaleDateString(siteMetadata.locale, POST_DATE_FORMAT)}
                         </time>
                       </dd>
                     </dl>

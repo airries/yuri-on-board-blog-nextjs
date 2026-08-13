@@ -1,5 +1,6 @@
-const { withContentlayer } = require('next-contentlayer2')
-
+// contentlayer は webpack プラグイン (withContentlayer) ではなく独立したコマンドで動かす。
+// プラグイン経由だと Turbopack で再生成が走らないため、package.json の
+// dev / build 側で contentlayer2 を明示的に実行している。
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
@@ -68,7 +69,7 @@ const unoptimized = process.env.UNOPTIMIZED ? true : undefined
  * @type {import('next/dist/next-server/server/config').NextConfig}
  **/
 module.exports = () => {
-  const plugins = [withContentlayer, withBundleAnalyzer]
+  const plugins = [withBundleAnalyzer]
   return plugins.reduce((acc, next) => next(acc), {
     output,
     basePath,

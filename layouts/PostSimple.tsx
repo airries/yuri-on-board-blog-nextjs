@@ -1,3 +1,4 @@
+import { POST_DATE_FORMAT } from '@/data/blogConfig'
 import { ReactNode } from 'react'
 import { formatDate } from 'pliny/utils/formatDate'
 import { CoreContent } from 'pliny/utils/contentlayer'
@@ -9,14 +10,6 @@ import SectionContainer from '@/components/SectionContainer'
 import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 
-const postDateTemplate: Intl.DateTimeFormatOptions = {
-  // weekday: 'long',
-  year: 'numeric',
-  // month: 'long',
-  month: '2-digit',
-  // day: 'numeric',
-  day: '2-digit',
-}
 
 interface LayoutProps {
   content: CoreContent<Blog>
@@ -41,7 +34,7 @@ export default function PostLayout({ content, next, prev, children }: LayoutProp
                     <dt className="sr-only">Published on</dt>
                     <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
                       <time dateTime={date}>
-                        {new Date(date).toLocaleDateString(siteMetadata.locale, postDateTemplate)}
+                        {new Date(date).toLocaleDateString(siteMetadata.locale, POST_DATE_FORMAT)}
                       </time>
                     </dd>
                   </div>
@@ -54,7 +47,7 @@ export default function PostLayout({ content, next, prev, children }: LayoutProp
                         （最終更新：
                         {new Date(lastmod).toLocaleDateString(
                           siteMetadata.locale,
-                          postDateTemplate
+                          POST_DATE_FORMAT
                         )}
                         ）
                       </time>
@@ -69,7 +62,7 @@ export default function PostLayout({ content, next, prev, children }: LayoutProp
           </header>
           <div className="grid-rows-[auto_1fr] divide-y divide-gray-200 pb-8 dark:divide-gray-700 xl:divide-y-0">
             <div className="divide-y divide-gray-200 dark:divide-gray-700 xl:col-span-3 xl:row-span-2 xl:pb-0">
-              <div className="prose max-w-none pb-8 pt-10 dark:prose-invert">{children}</div>
+              <div className="prose max-w-[46rem] pb-8 pt-10 dark:prose-invert">{children}</div>
             </div>
             {siteMetadata.comments && (
               <div className="pb-6 pt-6 text-center text-gray-700 dark:text-gray-300" id="comment">

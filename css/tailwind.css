@@ -4,9 +4,13 @@
 @source '../node_modules/pliny';
 
 @theme inline {
+  /* IBM Plex Sans JP は latin サブセットのみ読み込んでいるので、実際に効くのは
+     英数字だけ。日本語は OS のフォントに落ちるため、意図した順序を明示する
+     (指定しないと環境ごとに MS ゴシック等が当たって印象が大きく変わる)。 */
   --font-sans:
-    var(--font-ibm-plex-sans-jp), ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
-    'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    var(--font-ibm-plex-sans-jp), 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP',
+    'Yu Gothic UI', 'Yu Gothic', Meiryo, ui-sans-serif, system-ui, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
   --color-primary-50: var(--color-pink-50);
   --color-primary-100: var(--color-pink-100);
@@ -46,13 +50,29 @@
   color: var(--color-primary-400);
 }
 
+/* 和文は字面が仮想ボディいっぱいに広がるので、欧文向けの詰めた行送り・
+   負の字間だと窮屈になる。見出しは行送りを確保し、字間の詰めは弱める。 */
 .prose :where(h1, h2):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
   font-weight: 700;
-  letter-spacing: var(--tracking-tight);
+  line-height: 1.5;
+  letter-spacing: 0.01em;
 }
 
 .prose :where(h3):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
   font-weight: 600;
+  line-height: 1.6;
+}
+
+/* 和文の本文は 1 行 35〜45 文字が読みやすい。既定の prose 幅より広げない */
+.prose {
+  line-height: 1.9;
+}
+
+.prose :where(p):not(:where([class~='not-prose'], [class~='not-prose'] *)) {
+  /* 行頭・行末の禁則と、単語途中で切らない折り返し */
+  line-break: strict;
+  overflow-wrap: anywhere;
+  word-break: normal;
 }
 
 .task-list-item::before {

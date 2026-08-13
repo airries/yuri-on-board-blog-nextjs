@@ -80,12 +80,15 @@ export default function ListLayoutWithTags({
     <>
       <div>
         <div className="pb-6 pt-6">
+          <p className="text-primary-600 dark:text-primary-400 mb-2 text-xs font-semibold tracking-[0.18em]">
+            ARTICLES
+          </p>
           <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:hidden sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
             {title}
           </h1>
         </div>
         <div className="flex sm:space-x-24">
-          <div className="hidden h-full max-h-screen min-w-[280px] max-w-[280px] flex-wrap overflow-auto rounded bg-gray-50 pt-5 shadow-md dark:bg-gray-900/70 dark:shadow-gray-800/40 sm:flex">
+          <div className="bg-paper-panel border-paper-border hidden h-full max-h-screen min-w-[280px] max-w-[280px] flex-wrap overflow-auto rounded border pt-5 dark:border-gray-800 dark:bg-gray-900/70 sm:flex">
             <div className="px-6 py-4">
               {!activeTag ? (
                 <h3 className="font-bold text-primary-500">すべての記事</h3>
@@ -121,11 +124,11 @@ export default function ListLayoutWithTags({
             </div>
           </div>
           <div>
-            <ul>
+            <ul className="divide-paper-border divide-y dark:divide-gray-800">
               {displayPosts.map((post) => {
                 const { path, date, title, summary, tags } = post
                 return (
-                  <li key={path} className="py-5">
+                  <li key={path} className="py-6 first:pt-0">
                     <article className="flex flex-col space-y-2 xl:space-y-0">
                       <dl>
                         <dt className="sr-only">Published on</dt>

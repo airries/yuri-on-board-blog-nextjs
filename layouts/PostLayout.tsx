@@ -106,7 +106,11 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
               </dd>
             </dl>
             <div className="divide-y divide-gray-200 dark:divide-gray-700 xl:col-span-3 xl:row-span-2 xl:pb-0">
-              <div className="prose max-w-[46rem] pb-8 pt-10 dark:prose-invert">{children}</div>
+              {/* max-w を固定すると、幅制限のないタイトル (header) より本文の右端が
+                  手前で止まり、ページ全体で見て左に寄って見える。行の読みやすさは
+                  css/tailwind.css の .prose p (line-break 等) 側で確保しており、
+                  ここでの幅は親 (タイトルと同じ) に合わせる。 */}
+              <div className="prose max-w-none pb-8 pt-10 dark:prose-invert">{children}</div>
               <div className="pb-6 pt-6 text-sm text-gray-700 dark:text-gray-300">
                 <Link href={discussUrl(path)} rel="nofollow">
                   Discuss on Twitter

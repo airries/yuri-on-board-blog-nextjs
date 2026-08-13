@@ -11,7 +11,6 @@
     "generate:content": "contentlayer2 build",
     "build": "cross-env NODE_ENV=production contentlayer2 build && next build && node ./scripts/postbuild.mjs",
     "serve": "next start",
-    "analyze": "cross-env ANALYZE=true contentlayer2 build && cross-env ANALYZE=true next build",
     "lint": "eslint app components layouts scripts data contentlayer.config.ts next.config.js",
     "lint:fix": "eslint --fix app components layouts scripts data contentlayer.config.ts next.config.js",
     "typecheck": "contentlayer2 build && tsc --noEmit",
@@ -20,7 +19,6 @@
   },
   "dependencies": {
     "@headlessui/react": "2.2.10",
-    "@next/bundle-analyzer": "16.3.0",
     "@tailwindcss/forms": "^0.5.11",
     "@tailwindcss/postcss": "^4.3.3",
     "@tailwindcss/typography": "^0.5.20",

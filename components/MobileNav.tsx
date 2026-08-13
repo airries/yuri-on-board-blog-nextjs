@@ -55,7 +55,7 @@ const MobileNav = () => {
             leaveFrom="translate-x-0"
             leaveTo="translate-x-full"
           >
-            <DialogPanel className="fixed inset-y-0 right-0 z-70 w-full max-w-xs bg-white p-8 dark:bg-gray-950">
+            <DialogPanel className="bg-paper fixed inset-y-0 right-0 z-70 w-full max-w-xs p-8 dark:bg-gray-950">
               <div className="flex justify-end">
                 <button
                   className="hover:text-primary-500 dark:hover:text-primary-400 -mt-2 -mr-2 h-10 w-10 p-2 text-gray-900 dark:text-gray-100"

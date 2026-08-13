@@ -11,8 +11,11 @@ const MAX_DISPLAY = 5
 export default function Home({ posts }: { posts: CoreContent<Blog>[] }) {
   return (
     <>
-      <div className="divide-y divide-gray-200 dark:divide-gray-700">
+      <div className="divide-paper-border divide-y dark:divide-gray-800">
         <div className="space-y-2 pt-6 pb-8 md:space-y-5">
+          <p className="text-primary-600 dark:text-primary-400 text-xs font-semibold tracking-[0.18em]">
+            ARTICLES
+          </p>
           <h1 className="text-3xl font-bold text-gray-900 sm:text-4xl md:text-5xl dark:text-gray-100 leading-[1.35] tracking-normal">
             最新の記事
           </h1>
@@ -20,7 +23,7 @@ export default function Home({ posts }: { posts: CoreContent<Blog>[] }) {
             {siteMetadata.description}
           </p>
         </div>
-        <ul className="divide-y divide-gray-200 dark:divide-gray-700">
+        <ul className="divide-paper-border divide-y dark:divide-gray-800">
           {!posts.length && 'No posts found.'}
           {posts.slice(0, MAX_DISPLAY).map((post) => {
             const { slug, date, title, summary, tags } = post

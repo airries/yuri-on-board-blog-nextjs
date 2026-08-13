@@ -38,7 +38,9 @@ export default function PostMinimal({ content, next, prev, children }: LayoutPro
               <PageTitle>{title}</PageTitle>
             </div>
           </div>
-          <div className="prose max-w-[46rem] py-4 dark:prose-invert">{children}</div>
+          {/* 幅はタイトル (header) と揃える。max-w を固定すると本文の右端だけ
+              手前で止まり、ページ全体で見て左に寄って見える。 */}
+          <div className="prose max-w-none py-4 dark:prose-invert">{children}</div>
           {siteMetadata.comments && (
             <div className="pt-6 pb-6 text-center text-gray-700 dark:text-gray-300" id="comment">
               <Comments slug={slug} />

@@ -3,6 +3,12 @@
 @plugin '@tailwindcss/typography';
 @source '../node_modules/pliny';
 
+/* Tailwind v4 の dark: は既定で prefers-color-scheme (OS設定) を見る。
+   next-themes は attribute="class" で <html> に .dark/.light を付ける
+   Tailwind v3 時代の運用のままなので、ここで明示しないと OS がライトのままの
+   利用者は「ダーク」を選んでも見た目が変わらない。 */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme inline {
   /* IBM Plex Sans JP は latin サブセットのみ読み込んでいるので、実際に効くのは
      英数字だけ。日本語は OS のフォントに落ちるため、意図した順序を明示する
@@ -11,6 +17,12 @@
     var(--font-ibm-plex-sans-jp), 'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP',
     'Yu Gothic UI', 'Yu Gothic', Meiryo, ui-sans-serif, system-ui, sans-serif,
     'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+  /* 紙のようなオフホワイト。純白の bg-white の代わりに使う (ダークモードは
+     従来どおり gray-950 のまま個別クラスで指定する)。 */
+  --color-paper: #faf9f7;
+  --color-paper-border: #e8e4de;
+  --color-paper-panel: #f1eee8;
 
   --color-primary-50: var(--color-pink-50);
   --color-primary-100: var(--color-pink-100);
